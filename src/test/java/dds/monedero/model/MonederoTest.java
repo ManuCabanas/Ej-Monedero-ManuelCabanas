@@ -14,33 +14,33 @@ public class MonederoTest {
 
   @BeforeEach
   void init() {
-    cuenta = new Cuenta();
+    cuenta = new Cuenta(null, null);
   }
 
   @Test
   void Poner() {
-    cuenta.poner(1500);
+    cuenta.agregarMonto(1500);
   }
 
   @Test
   void PonerMontoNegativo() {
-    assertThrows(MontoNegativoException.class, () -> cuenta.poner(-1500));
+    assertThrows(MontoNegativoException.class, () -> cuenta.agregarMonto(-1500));
   }
 
   @Test
   void TresDepositos() {
-    cuenta.poner(1500);
-    cuenta.poner(456);
-    cuenta.poner(1900);
+    cuenta.agregarMonto(1500);
+    cuenta.agregarMonto(456);
+    cuenta.agregarMonto(1900);
   }
 
   @Test
   void MasDeTresDepositos() {
     assertThrows(MaximaCantidadDepositosException.class, () -> {
-          cuenta.poner(1500);
-          cuenta.poner(456);
-          cuenta.poner(1900);
-          cuenta.poner(245);
+          cuenta.agregarMonto(1500);
+          cuenta.agregarMonto(456);
+          cuenta.agregarMonto(1900);
+          cuenta.agregarMonto(245);
     });
   }
 
