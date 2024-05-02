@@ -8,10 +8,14 @@ import dds.monedero.exceptions.SaldoMenorException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
 public class Cuenta {
 
+  @Getter @Setter
   private double saldo = 0;
+  @Getter
   private List<Movimiento> movimientos;
 
   // public Cuenta() { saldo = 0;  } Code Smell, le paso el valor 0 al contructor con parametro y listo
@@ -46,7 +50,7 @@ public class Cuenta {
     if (this.saldo - monto < 0) {
       throw new SaldoMenorException("No puede sacar mas de " + getSaldo() + " $");
     }
-    double montoExtraidoHoy = getMontoExtraidoA(LocalDate.now());
+    double montoExtraidoHoy = getMontoExtraidoEnFecha(LocalDate.now());
     double limite = 1000 - montoExtraidoHoy;
     if (monto > limite) {
       throw new MaximoExtraccionDiarioException("No puede extraer mas de $ " + 1000
@@ -56,8 +60,8 @@ public class Cuenta {
     this.agregarMovimiento(LocalDate.now(), monto, false);
   }
 
-  public void agregarMovimiento(LocalDate fecha, double cuanto, boolean esDeposito) {
-    Movimiento movimiento = new Movimiento(fecha, cuanto, esDeposito);
+  public void agregarMovimiento(LocalDate fecha, double monto, boolean esDeposito) {
+    Movimiento movimiento = new Movimiento(fecha, monto, esDeposito);
     movimientos.add(movimiento);
   }
 
@@ -68,7 +72,7 @@ public class Cuenta {
         .sum();
   }  Code Smell: puedo usar metodo fueExtraido, que ya tiene la logica del filter */
 
-  public double getMontoExtraidoA(LocalDate fecha){
+  public double getMontoExtraidoEnFecha(LocalDate fecha){
     return movimientos.stream().filter(movimiento -> movimiento.fueExtraido(fecha))
         .mapToDouble(Movimiento::getMonto).sum();
   }
@@ -77,16 +81,16 @@ public class Cuenta {
     return this.movimientos.stream().filter(movimiento -> movimiento.fueDepositado((fecha))).toList().size();
   }
 
-  public List<Movimiento> getMovimientos() {
+  /* Public List<Movimiento> getMovimientos() {
     return movimientos;
   }
 
-  public double getSaldo() {
+  public double getSaldo() {                HAGO ANNOTATION DE GETTER Y SETTER
     return saldo;
   }
 
   public void setSaldo(double saldo) {
     this.saldo = saldo;
-  }
+  } */
 
 }

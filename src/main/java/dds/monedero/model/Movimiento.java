@@ -44,16 +44,17 @@ public class Movimiento {
     return !esDeposito;
   }
 
-  public void agregateA(Cuenta cuenta) {
-    cuenta.setSaldo(calcularValor(cuenta));
-    cuenta.agregarMovimiento(fecha, monto, esDeposito);
-  }
+  /* public void agregateA(Cuenta cuenta) {
+    cuenta.setSaldo(calcularValor(cuenta));             Code Smell: es responsabilidad de la cuenta,
+    cuenta.agregarMovimiento(fecha, monto, esDeposito); agregar un movimiento a su lista de movimientos
+  } */
 
-  public double calcularValor(Cuenta cuenta) {
+  /* public double calcularValor(Cuenta cuenta) {
     if (esDeposito) {
-      return cuenta.getSaldo() + getMonto();
+      return cuenta.getSaldo() + getMonto();  Code Smell: Maneja logica de la cuenta,
+                                              no debe ser manejada por la clase movimiento
     } else {
       return cuenta.getSaldo() - getMonto();
     }
-  }
+  } */
 }
