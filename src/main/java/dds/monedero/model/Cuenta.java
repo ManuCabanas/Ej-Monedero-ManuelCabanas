@@ -14,7 +14,8 @@ import lombok.Setter;
 public class Cuenta {
 
   @Getter @Setter
-  private double saldo = 0;
+  private double saldo;
+  // private double saldo = 0;  Code Smell: Cuando creo una cuenta, inicializo el saldo con un valor
   @Getter
   private List<Movimiento> movimientos;
 
