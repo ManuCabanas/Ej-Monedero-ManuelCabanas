@@ -6,7 +6,6 @@ import dds.monedero.exceptions.MontoNegativoException;
 import dds.monedero.exceptions.SaldoMenorException;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import lombok.Setter;
@@ -64,6 +63,17 @@ public class Cuenta {
   public void agregarMovimiento(LocalDate fecha, double monto, boolean esDeposito) {
     Movimiento movimiento = new Movimiento(fecha, monto, esDeposito);
     movimientos.add(movimiento);
+    this.actualizarSaldo(movimiento);
+  }
+
+  public void actualizarSaldo(Movimiento movimiento){
+    if(movimiento.isDeposito()){
+      this.saldo += movimiento.getMonto();
+    }
+
+    if(movimiento.isExtraccion()){
+      this.saldo -= movimiento.getMonto();
+    }
   }
 
   /* public double getMontoExtraidoA(LocalDate fecha) {

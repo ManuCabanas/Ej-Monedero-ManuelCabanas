@@ -1,8 +1,11 @@
 package dds.monedero.model;
 
 import java.time.LocalDate;
+import lombok.Getter;
 
 public class Movimiento {
+
+  @Getter
   private LocalDate fecha;
   // Nota: En ningún lenguaje de programación usen jamás doubles (es decir, números con punto flotante) para modelar dinero en el mundo real.
   // En su lugar siempre usen numeros de precision arbitraria o punto fijo, como BigDecimal en Java y similares
@@ -20,9 +23,9 @@ public class Movimiento {
     return monto;
   }
 
-  public LocalDate getFecha() {
-    return fecha;
-  }
+  /* public LocalDate getFecha() {
+    return fecha;                   Implemento annotation Getter
+  } */
 
   public boolean fueDepositado(LocalDate fecha) {
     return isDeposito() && esDeLaFecha(fecha);
